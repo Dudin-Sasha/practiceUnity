@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 
 [System.Serializable]
@@ -29,7 +30,8 @@ public class AnalyticsManager : MonoBehaviour
     private Queue<AnalyticsEvent> eventQueue = new Queue<AnalyticsEvent>();
     private string saveFilePath;
     private bool hasInternet = true;
-    float timer = 0f;
+    public float timer = 0f;
+    public float score = 0f;
 
     private void Awake()
     {
@@ -68,7 +70,7 @@ public class AnalyticsManager : MonoBehaviour
     private void TrySendEvent(AnalyticsEvent evt)
     {
         // int id = save.currentId;
-        save.SaveGame(sceneID.sceneId,timer);
+        save.SaveGame(sceneID.sceneId,timer,score);
         //тут в сохранение закину
         if (hasInternet)
         {
@@ -159,5 +161,22 @@ public class AnalyticsManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+    }
+
+        private void Start()
+    {   
+        Instance.LogEvent("game_started", 0 , "");
+    }
+
+    public void OnLevelCompleted(float timeSpent, float score)
+    {
+        // Уровень пройден
+        string data = $"{{\"time\": {timeSpent}, \"score\": {score}}}";
+        Instance.LogEvent("level_completed", timeSpent ,data);
+    }
+
+    public void OnBatteryOut()
+    {
+        Instance.LogEvent("drone_battery_out", 0 ,"");
     }
 }

@@ -6,7 +6,9 @@ public class scoreManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI speedometr;
     [SerializeField] private TextMeshProUGUI xp;
-    [SerializeField] private PlayerSc pl;
+    // [SerializeField] private PlayerSc pl;
+    [SerializeField] private GameObject finalMenu;
+    [SerializeField] private TextMeshProUGUI finalText;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +20,9 @@ public class scoreManager : MonoBehaviour
         speedometr.text = $"{speed}";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void menu(string text)
     {
-        
+        finalMenu.SetActive(true);
+        finalText.text = text;
     }
 }

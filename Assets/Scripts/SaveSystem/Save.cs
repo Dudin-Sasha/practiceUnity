@@ -60,10 +60,10 @@ public class Save : MonoBehaviour
 #endregion
 
 #region SaveLoad
-    public void SaveGame(int slot, float time = 1000)
+    public void SaveGame(int slot, float time = 1000, float score = 0)
     {
-        data.bestTime = time;//тут бы что-то типа ввода какой у меня там бест тайм, но игры то самой нету...
-        data.totalScore = 0;
+        data.bestTime = time;
+        data.totalScore = (int)score;
         data.version = "1.0";
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(GetSavePath(slot), EncryptBase64(json));

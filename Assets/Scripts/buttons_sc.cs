@@ -13,9 +13,8 @@ public class buttons_sc : MonoBehaviour
     private bool saveFlag = false;
     public void Quit()
     {
-        saveManager.SaveGame(SceneID.sceneId);
+        //saveManager.SaveGame(SceneID.sceneId);
 
-        Application.Quit();
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else

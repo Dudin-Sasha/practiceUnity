@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerSc : MonoBehaviour {
+public class PlayerSc : Sounds {
     [SerializeField] private DroneConfig config;
     [SerializeField] private gameManager_sc gm;
     public float maxSpeed;
@@ -13,6 +13,7 @@ public class PlayerSc : MonoBehaviour {
     public float batteryLife;
     public float hoverHeight = 5f;
     public float obstaclePenalty;
+    public float speed = 0;
 
     public float score = 0;
 
@@ -68,30 +69,18 @@ public class PlayerSc : MonoBehaviour {
 
     public void Up(InputAction.CallbackContext context)
     {
-        Debug.Log(Vector3.up);
+        Debug.Log("up");
         rb.AddRelativeForce(AccelerationCheck(Vector3.up));
     } 
     public void Down(InputAction.CallbackContext context)
     {
+        Debug.Log("down");
         rb.AddRelativeForce(AccelerationCheck(Vector3.down));
     }
 
     void FixedUpdate() {
-        //rb.useGravity = false;
 
-        // Подъем / Спуск
-        // if (Input.GetKey(KeyCode.Space))
-        //     rb.AddRelativeForce(AccelerationCheck(Vector3.up));
-        // if (Input.GetKey(KeyCode.LeftControl))
-        //     rb.AddRelativeForce(AccelerationCheck(Vector3.down));
-        //rb.AddRelativeForce(0,9.8f,0);
-        // Вперед / Назад
-        // float forward = Input.GetAxis("Vertical");
-        // rb.AddRelativeForce(AccelerationCheck(Vector3.forward * forward));
-
-        // // Поворот (Yaw)
-        // float turn = Input.GetAxis("Horizontal");
-        // rb.AddRelativeTorque(Vector3.up * turn * rotationSpeed);
+        speed = rb.velocity.magnitude * 3.6f;
     }
 
     IEnumerator batteryTimer() {
@@ -105,6 +94,7 @@ public class PlayerSc : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
+        PlaySound(sounds[2]);
         if (collision.gameObject.tag == "-") {
             //Vector3 = (0, 0, 0);
             rb.AddRelativeForce(AccelerationCheck(Vector3.forward * -0.1f));
@@ -118,7 +108,8 @@ public class PlayerSc : MonoBehaviour {
         switch (other.tag) {
             case ("+"):
                 score += 10;
-                Destroy(other);
+                Destroy(other.gameObject);
+                PlaySound(sounds[1]);
                 break;
             case ("finish"):
                 //Time.TimeScale = 0;

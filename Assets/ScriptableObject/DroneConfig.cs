@@ -16,14 +16,4 @@ public class DroneConfig : ScriptableObject
     public float rotationSpeed = 50f;
     public float batteryLife = 5f;
     public float obstaclePenalty = 50f;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

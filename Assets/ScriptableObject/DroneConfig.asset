@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 40
   acceleration: 47.5
-  rotationSpeed: 9.8
+  rotationSpeed: 4
   batteryLife: 150
   obstaclePenalty: 15
